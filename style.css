@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 @font-face {
     font-family: Glitch;
-    src: url(/Glitch.ttf);
+    src: url(\Glitch.ttf);
 }
 * {
     padding: 0;
