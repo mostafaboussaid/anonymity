@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="box">
+       <div class="anonymize-box">
+        <h1 class="header">Join Us For Anonymity</h1>
+        <label style="font-size: 14px; margin-bottom: 2px;">Username</label>
+        <input type="text" autocomplete="false" placeholder="How do you want to be called..." id="username">
+        <label style="font-size: 14px; margin-bottom: 2px;">Password</label>
+        <input autocomplete="off" type="tpassword" placeholder="Protect your anonymity..." id="password">
+        <button id="anonymize">Anonymize</button>
+        <h1 id="errorsuccess"></h1>
+       </div>
+    </div>
+</body>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC6PfqtSP4ADQGTu_OQwzTfcfZpZYhPFN8",
+      authDomain: "anonymity-432bf.firebaseapp.com",
+      projectId: "anonymity-432bf",
+      storageBucket: "anonymity-432bf.appspot.com",
+      messagingSenderId: "241401959536",
+      appId: "1:241401959536:web:ebdc50d642f37ef78710b5"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    let errormsg = document.getElementById('errorsuccess')
+    const auth = getAuth();
+    document.getElementById("anonymize").addEventListener("click", function() {
+		  var username =  document.getElementById("username").value + '@mb7.com';
+		  var password = document.getElementById("password").value;
+		  //For new registration
+		  createUserWithEmailAndPassword(auth, username , password)
+		  .then((userCredential) => {
+		    // Signed in 
+		    const user = userCredential.user;
+            errormsg.style.color = 'rgb(140,0,255)'
+            errormsg.innerText = "Registration is successful"
+
+        })
+		  .catch((error) => {
+            if (error.code === "auth/weak-password") {
+            errormsg.innerText = 'Weak Password';
+            } 
+            if (error.code === "auth/missing-password") {
+            errormsg.innerText = 'Password Missing';
+            }
+            if (error.code === "auth/invalid-email") {
+            errormsg.innerText = 'Username Missing';
+            }
+            if (error.code === "auth/email-already-in-use") {
+            errormsg.innerText = 'Username already exists';
+            }
+		  });		  		  
+	  });
+  </script>
+
+<script src="script.js"></script>
+</html>
